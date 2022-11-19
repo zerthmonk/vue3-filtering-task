@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { nanoid } from "nanoid";
-import type { AllowedFields } from "@/types/blog";
+import type { Filter, AllowedFields } from "@/types/blog";
 import type { PropType } from "vue";
 import { computed, ref } from "vue";
 import { useBlogStore } from "@/stores/blog";
@@ -33,7 +33,13 @@ const options = computed(() => Object.keys(items));
 
 function handleSelect() {
   if (selected.value !== empty) {
-    store.updateFilter(filterId, items[selected.value]);
+    const filter: Filter = {
+      _id: filterId,
+      name: props.field,
+      method: selected.value,
+      apply: items[selected.value],
+    };
+    store.updateFilter(filter);
   } else {
     store.dropFilter(filterId);
   }

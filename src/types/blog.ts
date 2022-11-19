@@ -8,15 +8,21 @@ type AllowedFields = keyof typeof FilterEnum;
 
 interface Filter {
   _id: string;
+  name: string;
+  method: string;
   apply: Function;
 }
 
+interface FilterMethod {
+  [key: string]: Filter["apply"];
+}
+
 interface StoreFilter {
-  [key: Filter["_id"]]: Filter["apply"];
+  [key: string]: Filter;
 }
 
 interface StoreLabel {
   [key: string]: string;
 }
 
-export type { Filter, StoreFilter, StoreLabel, AllowedFields };
+export type { Filter, FilterMethod, StoreFilter, StoreLabel, AllowedFields };
